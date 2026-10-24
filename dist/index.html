@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="معمار ملی؛ آرشیو تصویری دانش‌آموختگان معماری دانشگاه شهید بهشتی. هر ورودی، یک قاب از خاطره‌های مشترک.">
+  <title>معمار ملی — دانش‌آموختگان معماری</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="cohorts.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#archive">رفتن به ورودی‌ها</a>
+  <div class="page-shell" id="top">
+    <header class="masthead" aria-label="معمار ملی">
+      <div class="brand university" aria-label="جای لوگوی دانشگاه شهید بهشتی">
+        <span class="logo-slot university-slot" aria-hidden="true">ش<span>ب</span></span>
+        <div class="brand-copy"><span>دانشگاه شهید بهشتی</span><small>جای لوگوی دانشگاه</small></div>
+      </div>
+      <div class="masthead-title">
+        <span class="eyebrow" lang="en" dir="ltr">MELLI ARCHITECT</span>
+        <h1>معمار ملی<span class="title-dot" aria-hidden="true">.</span></h1>
+        <p>دانش‌آموختگان معماری دانشگاه شهید بهشتی</p>
+      </div>
+      <div class="brand artinext" aria-label="جای لوگوی شرکت ارتینکست">
+        <div class="artinext-wordmark" lang="en" dir="ltr">artinext<span aria-hidden="true">↗</span></div>
+        <small>جای لوگوی ارتینکست</small>
+      </div>
+    </header>
+
+    <main id="archive">
+      <section class="archive-intro" aria-label="آرشیو ورودی‌ها">
+        <div class="intro-copy"><span class="section-kicker"><i aria-hidden="true"></i> آرشیو ورودی‌ها</span><h2>هم‌کلاس دیروز،<br><span>معمار امروز.</span></h2></div>
+        <div class="intro-aside"><p>هر ورودی، یک قاب.<br>روایتِ ما از روزهایی که با هم ساختیم.</p><a class="scroll-link" href="#cohorts">مرور ورودی‌ها <span aria-hidden="true">↓</span></a></div>
+      </section>
+
+      <nav class="archive-nav" aria-label="انتخاب سال ورودی">
+        <span class="nav-label">سال ورود</span>
+        <div id="year-nav" class="year-nav"></div>
+        <span class="archive-order">از تازه‌ترین فارغ‌التحصیلی <span aria-hidden="true">↓</span></span>
+      </nav>
+
+      <section id="cohorts" class="cohorts" aria-label="تصاویر گروهی ورودی‌ها"></section>
+      <noscript><p class="noscript">برای نمایش آرشیو ورودی‌ها، جاوااسکریپت مرورگر را فعال کنید.</p></noscript>
+
+      <div class="archive-end"><span class="end-line"></span><span>خاطره‌ها ادامه دارند</span><span class="end-line"></span></div>
+    </main>
+
+    <footer>
+      <div class="footer-brand">معمار ملی<span aria-hidden="true">.</span><small>آرشیو دانش‌آموختگان معماری</small></div>
+      <p class="demo-note">نسخهٔ نمایشی · سال‌ها و تصاویر نمونه‌اند. <a href="https://collego.edu.tw/Highschool/DepartmentIntro?dept_id=006009" target="_blank" rel="noopener noreferrer">منبع تصویر نمونه ↗</a></p>
+      <a href="#top" class="back-top">بازگشت به بالا <span aria-hidden="true">↑</span></a>
+    </footer>
+  </div>
+
+  <dialog id="photo-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-bar"><h2 id="dialog-title"></h2><button id="close-dialog" type="button" aria-label="بستن تصویر">بستن <span aria-hidden="true">×</span></button></div>
+    <img id="dialog-image" alt="">
+    <p class="dialog-caption">تصویر نمونه برای نمایش طرح؛ عکس واقعی هر ورودی جایگزین می‌شود.</p>
+  </dialog>
+</body>
+</html>
