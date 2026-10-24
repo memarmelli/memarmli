@@ -20,20 +20,6 @@ cohorts.forEach((cohort, index) => {
   article.id = `cohort-${cohort.year}`;
   article.setAttribute('aria-label', `ورودی ${year}`);
 
-  const meta = document.createElement('div');
-  meta.className = 'cohort-meta';
-  const label = document.createElement('span');
-  label.className = 'cohort-label';
-  const rule = document.createElement('span');
-  rule.className = 'label-rule';
-  rule.setAttribute('aria-hidden', 'true');
-  label.append(rule, document.createTextNode(index === 0 ? 'تازه‌ترین قاب آرشیو' : 'از آرشیو خاطره‌ها'));
-  const count = document.createElement('span');
-  count.className = 'cohort-count';
-  count.dir = 'ltr';
-  count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(cohorts.length).padStart(2, '0')}`;
-  meta.append(label, count);
-
   const frame = document.createElement('div');
   frame.className = 'cohort-frame';
   const yearPanel = document.createElement('div');
@@ -75,7 +61,7 @@ cohorts.forEach((cohort, index) => {
     closeDialog.focus();
   });
   frame.append(yearPanel, button);
-  article.append(meta, frame);
+  article.append(frame);
   archive.append(article);
 
   const navLink = document.createElement('a');
