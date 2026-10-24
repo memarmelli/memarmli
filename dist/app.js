@@ -3,6 +3,10 @@
 const persianNumber = new Intl.NumberFormat('fa-IR', {useGrouping: false});
 const archive = document.getElementById('cohorts');
 const yearNav = document.getElementById('year-nav');
+const yearSearch = document.getElementById('year-search');
+const yearInput = document.getElementById('year-input');
+const clearSearch = document.getElementById('clear-search');
+const searchStatus = document.getElementById('search-status');
 const dialog = document.getElementById('photo-dialog');
 const dialogImage = document.getElementById('dialog-image');
 const dialogTitle = document.getElementById('dialog-title');
@@ -78,6 +82,64 @@ if (!cohorts.length) {
   empty.textContent = 'قاب نخست آرشیو به‌زودی اینجا قرار می‌گیرد.';
   archive.append(empty);
 }
+
+function normalizeYear(value) {
+  return value.trim()
+    .replace(/[۰-۹]/g, digit => String(digit.charCodeAt(0) - 0x06f0))
+    .replace(/[٠-٩]/g, digit => String(digit.charCodeAt(0) - 0x0660));
+}
+
+function resetYearSearch() {
+  archive.querySelectorAll('.cohort').forEach(article => { article.hidden = false; });
+  yearInput.value = '';
+  yearInput.removeAttribute('aria-invalid');
+  clearSearch.hidden = true;
+  searchStatus.hidden = true;
+  searchStatus.textContent = '';
+}
+
+yearSearch.addEventListener('submit', event => {
+  event.preventDefault();
+  const year = normalizeYear(yearInput.value);
+  searchStatus.hidden = false;
+  if (!/^\d{4}$/.test(year)) {
+    yearInput.setAttribute('aria-invalid', 'true');
+    searchStatus.textContent = 'سال ورودی را با ۴ رقم وارد کنید.';
+    yearInput.focus();
+    return;
+  }
+
+  yearInput.removeAttribute('aria-invalid');
+  const match = cohorts.find(cohort => cohort.year === Number(year));
+  archive.querySelectorAll('.cohort').forEach(article => {
+    article.hidden = article.id !== `cohort-${year}`;
+  });
+  yearNav.querySelectorAll('a').forEach(link => {
+    if (match && link.hash === `#cohort-${year}`) link.setAttribute('aria-current', 'true');
+    else link.removeAttribute('aria-current');
+  });
+  clearSearch.hidden = false;
+  const displayYear = persianNumber.format(Number(year));
+  searchStatus.textContent = match ? `ورودی ${displayYear}` : `ورودی ${displayYear} در آرشیو پیدا نشد.`;
+});
+
+yearInput.addEventListener('input', () => {
+  yearInput.removeAttribute('aria-invalid');
+  if (!yearInput.value) resetYearSearch();
+  else if (!searchStatus.hidden) {
+    searchStatus.hidden = true;
+    searchStatus.textContent = '';
+  }
+});
+
+clearSearch.addEventListener('click', () => {
+  resetYearSearch();
+  yearInput.focus();
+});
+
+yearNav.addEventListener('click', event => {
+  if (event.target.closest('a')) resetYearSearch();
+});
 
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {

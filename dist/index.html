@@ -8,9 +8,9 @@
   <title>معمار ملی — دانش‌آموختگان معماری</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
-  <script src="cohorts.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261024-search-1">
+  <script src="cohorts.js?v=20261024-search-1" defer></script>
+  <script src="app.js?v=20261024-search-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#archive">رفتن به ورودی‌ها</a>
@@ -21,7 +21,6 @@
         <div class="brand-copy"><span>دانشگاه شهید بهشتی</span><small>جای لوگوی دانشگاه</small></div>
       </div>
       <div class="masthead-title">
-        <span class="eyebrow" lang="en" dir="ltr">MELLI ARCHITECT</span>
         <h1>معمار ملی<span class="title-dot" aria-hidden="true">.</span></h1>
         <p>دانش‌آموختگان معماری دانشگاه شهید بهشتی</p>
       </div>
@@ -33,7 +32,15 @@
 
     <main id="archive">
       <nav class="archive-nav" aria-label="انتخاب سال ورودی">
-        <span class="nav-label">سال ورود</span>
+        <form id="year-search" class="year-search" role="search" aria-label="جست‌وجوی سال ورودی" novalidate>
+          <label for="year-input">سال ورودی</label>
+          <div class="year-search-controls">
+            <input id="year-input" name="year" type="text" inputmode="numeric" maxlength="4" pattern="[0-9۰-۹٠-٩]{4}" placeholder="مثلاً ۱۳۹۰" autocomplete="off" aria-describedby="search-status">
+            <button type="submit">پیدا کن <span aria-hidden="true">↗</span></button>
+            <button id="clear-search" class="clear-search" type="button" hidden>همهٔ ورودی‌ها</button>
+          </div>
+          <p id="search-status" class="search-status" role="status" aria-live="polite" hidden></p>
+        </form>
         <div id="year-nav" class="year-nav"></div>
       </nav>
 
