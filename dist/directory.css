@@ -8,14 +8,14 @@
 .graduates-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:42px 34px;margin-bottom:72px;direction:rtl}
 .graduate-card{position:relative;display:block;width:100%;padding:0;border:0;border-radius:17px;overflow:hidden;background:#060a14;color:var(--text);cursor:zoom-in;box-shadow:0 0 18px rgb(85 90 100 / .18);transition:transform .3s ease,box-shadow .3s ease}
 .graduate-card:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
-.graduate-photo{display:block;width:100%;aspect-ratio:3/4;background-color:#171c27;background-repeat:no-repeat;background-position:center;background-size:cover;object-fit:cover;filter:saturate(.65) brightness(.91);transition:filter .35s ease}
+.graduate-photo{display:block;width:100%;aspect-ratio:6/8;background-color:#171c27;background-repeat:no-repeat;background-position:center;background-size:cover;object-fit:cover;filter:saturate(.65) brightness(.91);transition:filter .35s ease}
 .graduate-card::after{content:'';position:absolute;inset:60% 0 0;background:linear-gradient(0deg,#0006,transparent);pointer-events:none}
 .student-suffix{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 9px;border-radius:9px;background:#060a14e8;color:#f0ede5;font:700 15px Estedad,Vazirmatn,sans-serif;z-index:1;direction:ltr}
 .portrait-dialog{width:min(420px,92vw);padding:18px}.portrait-dialog .graduate-photo{border-radius:12px;filter:none}.portrait-dialog .dialog-caption{margin-top:12px}.directory-empty{padding:50px 0 80px;text-align:center;color:var(--muted)}.directory-empty[hidden]{display:none}
 .directory-toolbar[hidden]{display:none}
 @media(hover:hover) and (pointer:fine){.graduate-card:hover{transform:translateY(-4px);box-shadow:0 0 24px rgb(105 111 122 / .3)}.graduate-card:hover .graduate-photo{filter:saturate(.9) brightness(1)}}
-@media(max-width:1150px){.graduates-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 28px}}
-@media(max-width:760px){.graduates-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 22px}.directory-header{min-height:90px}.directory-intro{padding-top:38px}.directory-count strong{font-size:35px}}
+@media(max-width:1000px){.graduates-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 28px}}
+@media(max-width:760px){.graduates-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 22px}.directory-header{min-height:90px}.directory-intro{padding-top:38px}.directory-count strong{font-size:35px}}
 @media(max-width:520px){.graduates-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px}.directory-brand{font-size:26px}.directory-back{font-size:9px;gap:12px}.directory-intro{padding:32px 0 27px}.directory-intro h1{font-size:35px}.directory-year{font-size:12px}.directory-kicker{font-size:9px}.directory-toolbar{align-items:flex-start;gap:10px;flex-direction:column;font-size:9px;margin-bottom:24px}.graduate-card{border-radius:14px}.student-suffix{right:10px;bottom:10px;min-width:34px;height:29px;font-size:13px}.directory-count strong{font-size:30px}}
 .graduate-card{cursor:pointer}
 @media(prefers-reduced-motion:reduce){.graduate-card:hover{transform:none}}
