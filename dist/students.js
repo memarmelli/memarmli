@@ -18,8 +18,9 @@ window.MELLI_STUDENTS = Object.fromEntries((window.MELLI_COHORTS || []).map(coho
     memory: sampleMemory(index),
     studentSuffix: String(index + 1).padStart(2, '0'),
     sample: true,
-    portraitAtlas: 'assets/graduate-portraits-atlas-square.png',
-    portraitAtlasAspect: 1,
+    image: index === 0 ? 'assets/graduate-male-approved.png' : index === 1 ? 'assets/graduate-female-approved.png' : undefined,
+    portraitAtlas: 'assets/graduate-portraits-approved-atlas.png',
+    portraitAtlasAspect: 0.9,
     portraitIndex: index,
     portraitColumns: 6,
     portraitRows: 5
