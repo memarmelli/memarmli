@@ -28,7 +28,14 @@ cohorts.forEach((cohort, index) => {
   frame.className = 'cohort-frame';
   const yearPanel = document.createElement('div');
   yearPanel.className = 'cohort-year';
-  yearPanel.textContent = year;
+  const yearNumber = document.createElement('span');
+  yearNumber.className = 'cohort-year-number';
+  yearNumber.textContent = year;
+  const periodLabel = document.createElement('span');
+  periodLabel.className = 'cohort-period';
+  // The 1399 intake is period 60; adjacent intakes change by one period.
+  periodLabel.textContent = `دورهٔ ${persianNumber.format(cohort.year - 1399 + 60)}`;
+  yearPanel.append(yearNumber, periodLabel);
 
   const button = document.createElement('button');
   button.className = 'photo-button';
