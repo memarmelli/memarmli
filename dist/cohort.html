@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="چهره‌های دانش‌آموختگان معماری، به ترتیب دو رقم آخر شماره دانشجویی.">
+  <title>دانش‌آموختگان دوره — معمار ملی</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261025-memories-1">
+  <link rel="stylesheet" href="directory.css?v=20261025-memories-1">
+  <script src="cohorts.js?v=20261024-search-1" defer></script>
+  <script src="students.js?v=20261025-memories-1" defer></script>
+  <script src="portrait.js?v=20261025-memories-1" defer></script>
+  <script src="directory.js?v=20261025-memories-1" defer></script>
+</head>
+<body class="directory-page">
+  <a class="skip-link" href="#graduates">رفتن به چهره‌ها</a>
+  <div class="page-shell" id="top">
+    <header class="directory-header">
+      <a class="directory-brand" href="index.html">معمار ملی<span aria-hidden="true">.</span></a>
+      <a id="back-to-intake" class="directory-back" href="index.html">بازگشت به ورودی‌ها <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <section class="directory-intro" aria-labelledby="cohort-title">
+        <div><p class="directory-kicker">دانش‌آموختگان معماری</p><h1 id="cohort-title">چهره‌های دوره</h1><p id="cohort-year-label" class="directory-year"></p></div>
+        <div class="directory-count"><strong id="graduate-count">—</strong><span>نفر</span></div>
+      </section>
+      <div class="directory-toolbar"><p>به ترتیب دو رقم آخر شماره دانشجویی</p><span id="directory-sample-note">چهره‌ها و شماره‌ها نمونه‌اند</span></div>
+      <section id="graduates" class="graduates-grid" aria-label="چهره‌های دانش‌آموختگان"></section>
+      <p id="directory-empty" class="directory-empty" hidden></p>
+      <noscript><p class="noscript">برای نمایش چهره‌ها، جاوااسکریپت مرورگر را فعال کنید.</p></noscript>
+    </main>
+    <footer><div class="footer-brand">معمار ملی<span aria-hidden="true">.</span></div><p class="demo-note">نسخه نمایشی · پرتره‌های ساختگی برای نمایش طرح</p><a href="#top" class="back-top">بازگشت به بالا <span aria-hidden="true">↑</span></a></footer>
+  </div>
+</body>
+</html>

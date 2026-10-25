@@ -1,0 +1,13 @@
+.student-profile{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,740px);justify-content:center;gap:80px;padding:65px 0 90px;align-items:start}
+.student-profile[hidden],.profile-sample[hidden]{display:none}
+.student-portrait{position:relative;overflow:hidden;border-radius:20px;margin-bottom:30px;box-shadow:0 0 25px #555a642e}
+.student-portrait .graduate-photo{filter:none}
+.student-identity h1{font-size:clamp(25px,3vw,36px);font-weight:600;margin:7px 0 14px;line-height:1.8}
+.student-cohort{font-size:12px;color:var(--muted);line-height:2}
+.profile-sample{color:#828792;font-size:10px;line-height:2.1;margin-top:25px}
+.memory{padding-top:8px}.memory-eyebrow{font-size:11px;color:var(--muted);margin:0 0 12px}
+.memory h2{font-size:clamp(27px,3vw,40px);font-weight:400;margin:0 0 30px;letter-spacing:-1px}
+#student-memory p{font-size:15px;line-height:2.7;color:#c8c8cc;margin:0 0 24px}
+.memory-signature{font-size:13px;color:var(--muted);margin-top:38px;padding-top:22px;border-top:1px solid #252935}
+@media(max-width:1000px){.student-profile{gap:45px;grid-template-columns:minmax(190px,240px) minmax(0,1fr)}}
+@media(max-width:680px){.student-profile{grid-template-columns:1fr;gap:42px;padding:35px 0 55px}.student-identity{text-align:center}.student-portrait{width:min(70%,250px);margin:0 auto 24px}.profile-sample{margin-top:16px}.student-identity h1{margin-bottom:8px}.memory{padding-top:0}.memory h2{margin-bottom:22px}#student-memory p{font-size:14px;line-height:2.6}.student-portrait .student-suffix{right:12px;bottom:12px}}

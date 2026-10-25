@@ -31,8 +31,10 @@ cohorts.forEach((cohort, index) => {
   const yearNumber = document.createElement('span');
   yearNumber.className = 'cohort-year-number';
   yearNumber.textContent = year;
-  const periodLabel = document.createElement('span');
+  const periodLabel = document.createElement('a');
   periodLabel.className = 'cohort-period';
+  periodLabel.href = `cohort.html?year=${cohort.year}`;
+  periodLabel.setAttribute('aria-label', `مشاهده دانش‌آموختگان دوره ${persianNumber.format(cohort.year - 1399 + 60)}، ورودی ${year}`);
   // The 1399 intake is period 60; adjacent intakes change by one period.
   periodLabel.textContent = `دوره ${persianNumber.format(cohort.year - 1399 + 60)}`;
   yearPanel.append(yearNumber, periodLabel);

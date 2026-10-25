@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <title>یادگاری دانش‌آموخته — معمار ملی</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261025-memories-1">
+  <link rel="stylesheet" href="directory.css?v=20261025-memories-1">
+  <link rel="stylesheet" href="student.css?v=20261025-memories-1">
+  <script src="cohorts.js?v=20261024-search-1" defer></script>
+  <script src="students.js?v=20261025-memories-1" defer></script>
+  <script src="portrait.js?v=20261025-memories-1" defer></script>
+  <script src="student.js?v=20261025-memories-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#memory">رفتن به یادگاری</a>
+  <div class="page-shell" id="top">
+    <header class="directory-header">
+      <a class="directory-brand" href="index.html">معمار ملی<span aria-hidden="true">.</span></a>
+      <a id="back-to-cohort" class="directory-back" href="index.html">بازگشت به ورودی‌ها <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <article id="student-profile" class="student-profile" hidden>
+        <div class="student-identity">
+          <div id="student-portrait" class="student-portrait"></div>
+          <p class="directory-kicker">دانش‌آموخته معماری</p>
+          <h1 id="student-name"></h1>
+          <p id="student-cohort" class="student-cohort"></p>
+          <p id="profile-sample" class="profile-sample">نام، چهره و یادگاری این صفحه نمونه‌اند.</p>
+        </div>
+        <section id="memory" class="memory" aria-labelledby="memory-heading">
+          <p class="memory-eyebrow">یادگار روزهای دانشگاه</p>
+          <h2 id="memory-heading">چند خط برای ماندن</h2>
+          <div id="student-memory"></div>
+          <p id="memory-signature" class="memory-signature"></p>
+        </section>
+      </article>
+      <div id="profile-empty" class="directory-empty" hidden><h1>دانش‌آموخته پیدا نشد</h1><p>برای دیدن یادگاری‌ها از صفحه دوره، یک چهره را انتخاب کنید.</p></div>
+      <noscript><p class="noscript">برای نمایش یادگاری، جاوااسکریپت مرورگر را فعال کنید.</p></noscript>
+    </main>
+    <footer><div class="footer-brand">معمار ملی<span aria-hidden="true">.</span></div><p class="demo-note">نسخه نمایشی · یادگاری دانش‌آموختگان</p><a href="#top" class="back-top">بازگشت به بالا <span aria-hidden="true">↑</span></a></footer>
+  </div>
+</body>
+</html>
