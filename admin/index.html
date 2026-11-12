@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#070a10">
+  <title>مدیریت معمار ملی</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/NotoKufiArabic-fa.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="admin.css?v=5">
+  <script src="/career.js?v=20261025-more-1" defer></script>
+  <script src="admin.js?v=5" defer></script>
+</head>
+<body>
+  <!-- Login -->
+  <main id="login-view" class="login" hidden>
+    <form id="login-form" class="login-card" novalidate>
+      <img class="login-logo" src="/assets/melli-original.png" alt="معمار ملی" width="1500" height="643">
+      <h1>ورود مدیر</h1>
+      <p class="muted">کد ورود را وارد کنید. این کد فقط در اختیار مدیران آرشیو است.</p>
+      <label for="login-code">کد ورود <span class="en">Admin code</span></label>
+      <input id="login-code" name="code" type="password" autocomplete="off" spellcheck="false" dir="ltr" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+      <button class="primary" type="submit">ورود</button>
+      <p id="login-error" class="error" role="alert" hidden></p>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div id="app-view" hidden>
+    <header class="topbar">
+      <a class="brand" href="/" target="_blank" rel="noopener">معمار ملی<span>.</span> <small>مدیریت</small></a>
+      <nav class="tabs" aria-label="بخش‌ها">
+        <button class="tab" type="button" data-view="dash">داشبورد <span id="tab-pending" class="count" hidden></span></button>
+        <button class="tab" type="button" data-view="list">دانش‌آموختگان</button>
+      </nav>
+      <nav class="topbar-actions">
+        <a class="ghost" href="/" target="_blank" rel="noopener">مشاهده‌ی سایت ↗</a>
+        <button id="logout" class="ghost" type="button">خروج</button>
+      </nav>
+    </header>
+
+    <main id="dash-view" class="page" hidden>
+      <div class="toolbar">
+        <div>
+          <h1>داشبورد</h1>
+          <p id="bot-status" class="muted"></p>
+        </div>
+        <div class="toolbar-actions">
+          <button id="bot-sync" class="ghost" type="button">به‌روزرسانی از Telegram</button>
+        </div>
+      </div>
+      <div id="stats" class="stats"></div>
+      <div class="dash-grid">
+        <section class="card wide" id="edits-card">
+          <div class="card-head">
+            <h2>ویرایش‌های در انتظار تأیید</h2>
+            <span class="hint">تغییراتی که دانش‌آموختگان از طریق ربات Telegram فرستاده‌اند، پس از تأیید در سایت نمایش داده می‌شوند.</span>
+          </div>
+          <div id="edits" class="queue"></div>
+        </section>
+        <section class="card" id="joins-card">
+          <div class="card-head">
+            <h2>درخواست‌های عضویت</h2>
+            <span class="hint">افرادی که پرونده‌ای در آرشیو ندارند.</span>
+          </div>
+          <div id="joins" class="queue"></div>
+        </section>
+        <section class="card" id="incomplete-card">
+          <div class="card-head">
+            <h2>پرونده‌های ناقص</h2>
+            <span class="hint">کم‌ترین درصد تکمیل، اول.</span>
+          </div>
+          <ul id="incomplete" class="mini-list"></ul>
+        </section>
+        <section class="card wide" id="activity-card">
+          <h2>فعالیت‌های اخیر</h2>
+          <ol id="activity" class="activity"></ol>
+        </section>
+      </div>
+    </main>
+
+    <main id="list-view" class="page" hidden>
+      <div class="toolbar">
+        <div>
+          <h1>دانش‌آموختگان</h1>
+          <p id="list-count" class="muted"></p>
+        </div>
+        <div class="toolbar-actions">
+          <input id="search" type="search" placeholder="جست‌وجوی نام یا شماره‌ی دانشجویی" autocomplete="off">
+          <button id="export-csv" class="ghost" type="button">خروجی CSV</button>
+          <button id="bulk-add" class="ghost" type="button">افزودن گروهی</button>
+          <button id="add-student" class="primary" type="button">افزودن دانش‌آموخته</button>
+        </div>
+      </div>
+      <div id="filters" class="filters" role="group" aria-label="فیلتر فهرست">
+        <button type="button" data-filter="all" aria-pressed="true">همه</button>
+        <button type="button" data-filter="draft" aria-pressed="false">پیش‌نویس</button>
+        <button type="button" data-filter="linked" aria-pressed="false">متصل به Telegram</button>
+        <button type="button" data-filter="unlinked" aria-pressed="false">بدون Telegram</button>
+        <button type="button" data-filter="pending" aria-pressed="false">در انتظار تأیید</button>
+        <button type="button" data-filter="incomplete" aria-pressed="false">کمتر از نیمه تکمیل</button>
+      </div>
+      <div id="groups"></div>
+      <div id="list-empty" class="empty" hidden>
+        <h2>هنوز دانش‌آموخته‌ای ثبت نشده است.</h2>
+        <p class="muted">با «افزودن دانش‌آموخته» نخستین پرونده را بسازید. ورودی‌ها از سال ورود هر نفر ساخته می‌شوند.</p>
+      </div>
+    </main>
+
+    <main id="edit-view" class="page" hidden>
+      <form id="student-form" novalidate>
+        <div class="toolbar sticky">
+          <div>
+            <button id="back-to-list" class="link" type="button">→ بازگشت به فهرست</button>
+            <h1 id="form-title">دانش‌آموخته‌ی جدید</h1>
+          </div>
+          <div class="toolbar-actions">
+            <a id="view-profile" class="ghost" target="_blank" rel="noopener" hidden>مشاهده‌ی صفحه ↗</a>
+            <button id="delete-student" class="danger" type="button" hidden>حذف</button>
+            <button class="primary" type="submit">ذخیره</button>
+          </div>
+        </div>
+        <nav class="form-nav" aria-label="بخش‌های فرم"><a href="#basic">مشخصات</a><a href="#telegram-card">Telegram</a><a href="#specialties-card">تخصص‌ها</a><a href="#software-card">نرم‌افزارها</a><a href="#education">تحصیلات</a><a href="#resume">رزومه</a><a href="#portfolio">نمونه‌کارها</a><a href="#memory">یادگاری</a></nav>
+        <p id="form-error" class="error banner" role="alert" hidden></p>
+
+        <section class="card" id="basic">
+          <h2>مشخصات اصلی</h2>
+          <div class="grid identity">
+            <div class="photo-field">
+              <div class="photo-preview"><img id="photo-preview" alt="" hidden><span id="photo-empty">بدون عکس</span></div>
+              <label class="upload">بارگذاری عکس <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp"></label>
+              <button id="photo-remove" class="link small" type="button" hidden>حذف عکس</button>
+              <p class="hint">قاب عکس ۳ به ۴ است. عکس‌های دیگر از وسط برش می‌خورند.</p>
+            </div>
+            <div class="grid two">
+              <label>شماره‌ی دانشجویی <span class="en">Student number</span>
+                <input name="studentNumber" dir="ltr" inputmode="numeric" required placeholder="99411012">
+              </label>
+              <label>سال ورود <span class="en">Intake year</span>
+                <input name="year" dir="ltr" inputmode="numeric" placeholder="از شماره خوانده می‌شود">
+              </label>
+              <label>نام و نام خانوادگی <span class="en">Name, Persian</span>
+                <input name="name" required>
+              </label>
+              <label>Name <span class="en">English</span>
+                <input name="en.name" dir="ltr">
+              </label>
+              <label>محل فعلی <span class="en">Location, Persian</span>
+                <input name="location" placeholder="تهران، ایران">
+              </label>
+              <label>Current location <span class="en">English</span>
+                <input name="en.location" dir="ltr" placeholder="Tehran, Iran">
+              </label>
+              <label>شغل فعلی <span class="en">Occupation, Persian</span>
+                <input name="occupation">
+              </label>
+              <label>Current occupation <span class="en">English</span>
+                <input name="en.occupation" dir="ltr">
+              </label>
+              <label>محل کار <span class="en">Workplace, Persian</span>
+                <input name="employer" placeholder="نام دفتر یا شرکت">
+              </label>
+              <label>Workplace <span class="en">English</span>
+                <input name="en.employer" dir="ltr">
+              </label>
+              <label class="span">پروفایل LinkedIn <span class="en">LinkedIn URL</span>
+                <input name="linkedin" dir="ltr" placeholder="https://www.linkedin.com/in/...">
+              </label>
+              <div class="switches span">
+                <label class="check"><input name="published" type="checkbox" checked><span>نمایش در سایت <span class="en">Published</span></span></label>
+                <label class="check"><input name="openToWork" type="checkbox"><span>آماده‌ی همکاری <span class="en">Open to work</span></span></label>
+                <label class="check"><input name="mentoring" type="checkbox"><span>آماده‌ی منتورینگ <span class="en">Open to mentoring</span></span></label>
+                <label class="check"><input name="hideFromSearch" type="checkbox"><span>پنهان از موتورهای جست‌وجو <span class="en">Hidden from search engines</span></span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="telegram-card">
+          <div class="card-head">
+            <h2>اتصال Telegram</h2>
+            <span class="hint">این بخش فقط در پنل مدیریت دیده می‌شود و در سایت نمایش داده نمی‌شود.</span>
+          </div>
+          <div class="grid two">
+            <label>نام کاربری Telegram <span class="en">Telegram username, never shown on the site</span>
+              <input name="telegram.username" dir="ltr" placeholder="@username" autocomplete="off" spellcheck="false">
+            </label>
+            <div id="tg-status" class="tg-status"></div>
+          </div>
+          <p class="hint">با ثبت نام کاربری، دانش‌آموخته با ارسال <span dir="ltr">/start</span> به <span dir="ltr" class="bot-name">@memar_mli_bot</span> به این پرونده متصل می‌شود. برای افرادی که نام کاربری ندارند، یک پیوند دعوت یک‌بارمصرف بسازید و برایشان بفرستید.</p>
+          <div class="invite-row">
+            <button id="tg-invite" class="ghost" type="button">ساخت پیوند دعوت</button>
+            <input id="tg-invite-link" dir="ltr" readonly hidden aria-label="پیوند دعوت">
+            <button id="tg-copy" class="ghost" type="button" hidden>کپی پیوند</button>
+            <button id="tg-unlink" class="danger" type="button" hidden>قطع اتصال</button>
+          </div>
+        </section>
+
+        <section class="card" id="specialties-card">
+          <div class="card-head">
+            <h2>تخصص‌ها</h2>
+            <span class="hint">هر تعداد که لازم است انتخاب کنید. <span class="en">Specialties</span></span>
+          </div>
+          <div id="specialties" class="specialty-picker"></div>
+        </section>
+
+        <section class="card" id="software-card">
+          <div class="card-head">
+            <h2>نرم‌افزارها</h2>
+            <span class="hint">برای فیلتر صفحه‌ی اصلی. <span class="en">Software</span></span>
+          </div>
+          <div id="software" class="specialty-picker" dir="ltr"></div>
+        </section>
+
+        <section class="card" id="education">
+          <h2>تحصیلات</h2>
+          <div class="grid two">
+            <label>آخرین مدرک <span class="en">Highest degree</span>
+              <select name="degree"><option value="">انتخاب نشده</option><option value="bachelor">کارشناسی</option><option value="master">کارشناسی ارشد</option><option value="phd">دکتری</option></select>
+            </label>
+            <span></span>
+            <label>رشته <span class="en">Field, Persian</span><input name="degreeField" placeholder="معماری"></label>
+            <label>Field <span class="en">English</span><input name="en.degreeField" dir="ltr" placeholder="Architecture"></label>
+            <label>محل تحصیل <span class="en">University, Persian</span><input name="degreePlace" placeholder="دانشگاه شهید بهشتی"></label>
+            <label>University <span class="en">English</span><input name="en.degreePlace" dir="ltr" placeholder="Shahid Beheshti University"></label>
+            <label class="thesis-field">عنوان پایان‌نامه <span class="en">Thesis, Persian. Master's and PhD only</span><input name="thesis"></label>
+            <label class="thesis-field">Thesis title <span class="en">English</span><input name="en.thesis" dir="ltr"></label>
+          </div>
+        </section>
+
+        <section class="card" id="resume">
+          <div class="card-head">
+            <h2>رزومه</h2>
+            <div class="file-field">
+              <a id="resume-file-link" target="_blank" rel="noopener" hidden>فایل رزومه ↗</a>
+              <button id="resume-file-remove" class="link small" type="button" hidden>حذف فایل</button>
+              <label class="upload small">بارگذاری PDF رزومه <input id="resume-file-input" type="file" accept="application/pdf"></label>
+            </div>
+          </div>
+          <div class="grid two">
+            <label>خلاصه <span class="en">Summary, Persian</span><textarea name="resume.summary" rows="4"></textarea></label>
+            <label>Summary <span class="en">English</span><textarea name="en.resume.summary" rows="4" dir="ltr"></textarea></label>
+          </div>
+          <h3>سوابق <span class="en">Timeline, newest first. Work rows add up to the total experience.</span></h3>
+          <p id="experience-total" class="experience-total"></p>
+          <div id="entries" class="rows"></div>
+          <button id="add-entry" class="ghost" type="button">+ افزودن سابقه</button>
+        </section>
+
+        <section class="card" id="portfolio">
+          <h2>نمونه‌کارها</h2>
+          <div id="projects" class="rows"></div>
+          <button id="add-project" class="ghost" type="button">+ افزودن نمونه‌کار</button>
+        </section>
+
+        <section class="card" id="memory">
+          <h2>یادگاری</h2>
+          <div class="grid two">
+            <label>متن فارسی <span class="en">پاراگراف‌ها را با یک خط خالی جدا کنید</span><textarea name="memory" rows="8"></textarea></label>
+            <label>English text <span class="en">Separate paragraphs with a blank line</span><textarea name="en.memory" rows="8" dir="ltr"></textarea></label>
+          </div>
+        </section>
+      </form>
+    </main>
+  </div>
+
+  <dialog id="cohort-dialog">
+    <form id="cohort-form" method="dialog" novalidate>
+      <h2 id="cohort-title"></h2>
+      <label>تاریخ دانش‌آموختگی (میلادی) <span class="en">Graduation date, orders intakes</span>
+        <input name="graduatedAt" type="date" dir="ltr">
+      </label>
+      <div class="group-photo">
+        <img id="cohort-preview" alt="" hidden>
+        <span id="cohort-empty">بدون عکس گروهی</span>
+      </div>
+      <div class="dialog-row">
+        <label class="upload small">بارگذاری عکس گروهی <input id="cohort-input" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <button id="cohort-remove" class="link small" type="button" hidden>حذف عکس</button>
+      </div>
+      <p id="cohort-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button value="cancel" class="ghost" formnovalidate>انصراف</button>
+        <button id="cohort-save" class="primary" type="button">ذخیره</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="bulk-dialog">
+    <form id="bulk-form" method="dialog" novalidate>
+      <h2>افزودن گروهی</h2>
+      <p class="muted">هر خط یک نفر: شماره‌ی دانشجویی، سپس نام. پرونده‌ها به‌صورت پیش‌نویس ساخته می‌شوند و می‌توان آن‌ها را بعداً تکمیل کرد.</p>
+      <label>فهرست <span class="en">One per line: student number, name</span>
+        <textarea id="bulk-lines" rows="10" placeholder="99411012، سارا امینی"></textarea>
+      </label>
+      <p id="bulk-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button value="cancel" class="ghost" formnovalidate>انصراف</button>
+        <button id="bulk-save" class="primary" type="button">افزودن</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="entry-template">
+    <div class="row entry">
+      <label>نوع <span class="en">Type</span><select data-field="kind"><option value="work">کار</option><option value="education">تحصیل</option></select></label>
+      <label>از سال <span class="en">From</span><input data-field="from" dir="ltr" inputmode="numeric" placeholder="1399"></label>
+      <label>ماه شروع <span class="en">Start month</span><select data-field="fromMonth"><option value="">ماه</option><option value="1">فروردین</option><option value="2">اردیبهشت</option><option value="3">خرداد</option><option value="4">تیر</option><option value="5">مرداد</option><option value="6">شهریور</option><option value="7">مهر</option><option value="8">آبان</option><option value="9">آذر</option><option value="10">دی</option><option value="11">بهمن</option><option value="12">اسفند</option></select></label>
+      <label>تا سال <span class="en">To, empty = present</span><input data-field="to" dir="ltr" inputmode="numeric"></label>
+      <label>ماه پایان <span class="en">End month</span><select data-field="toMonth"><option value="">ماه</option><option value="1">فروردین</option><option value="2">اردیبهشت</option><option value="3">خرداد</option><option value="4">تیر</option><option value="5">مرداد</option><option value="6">شهریور</option><option value="7">مهر</option><option value="8">آبان</option><option value="9">آذر</option><option value="10">دی</option><option value="11">بهمن</option><option value="12">اسفند</option></select></label>
+      <label>عنوان <span class="en">Title, Persian</span><input data-field="title"></label>
+      <label>Title <span class="en">English</span><input data-field="titleEn" dir="ltr"></label>
+      <label>محل <span class="en">Place, Persian</span><input data-field="place"></label>
+      <label>Place <span class="en">English</span><input data-field="placeEn" dir="ltr"></label>
+      <div class="row-actions"><button class="link small up" type="button" title="بالاتر">↑</button><button class="link small remove" type="button">حذف</button></div>
+    </div>
+  </template>
+
+  <template id="project-template">
+    <div class="row project">
+      <div class="project-image">
+        <img alt="" hidden>
+        <label class="upload small">تصویر <input type="file" accept="image/jpeg,image/png,image/webp"></label>
+      </div>
+      <label>عنوان <span class="en">Title, Persian</span><input data-field="title"></label>
+      <label>Title <span class="en">English</span><input data-field="titleEn" dir="ltr"></label>
+      <label>نوع <span class="en">Type, Persian</span><input data-field="kind" placeholder="مسکونی"></label>
+      <label>Type <span class="en">English</span><input data-field="kindEn" dir="ltr" placeholder="Residential"></label>
+      <label>سال <span class="en">Year</span><input data-field="year" dir="ltr" inputmode="numeric"></label>
+      <label>پیوند <span class="en">Link</span><input data-field="url" dir="ltr" placeholder="https://"></label>
+      <div class="row-actions"><button class="link small up" type="button" title="بالاتر">↑</button><button class="link small remove" type="button">حذف</button></div>
+    </div>
+  </template>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

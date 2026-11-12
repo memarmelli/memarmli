@@ -5,3 +5,17 @@ node_modules/
 .env.*
 !.env.example
 qa/
+
+# Admin code hash, graduate records and the one-time code file stay off the public site and out of git.
+data/
+__pycache__/
+
+# Stage only uploads referenced by the published dist/data.js.
+/dist/uploads/*
+/dist/.openai/
+
+# Telegram bot (Cloudflare Worker): local state and the copy of wrangler.example.toml with real ids.
+bot/.wrangler/
+bot/.wrangler-dry-run/
+bot/.dev.vars
+bot/wrangler.toml

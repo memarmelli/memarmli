@@ -1,0 +1,16 @@
+# Copy to wrangler.toml, then replace database_id with the id that
+# `npx wrangler d1 create melli-architect-bot` prints.
+name = "melli-architect-bot"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+BOT_USERNAME = "memar_mli_bot"
+# Public address of the site, used for "view on the site" buttons.
+SITE_URL = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "melli-architect-bot"
+database_id = "PASTE_DATABASE_ID_FROM_WRANGLER_D1_CREATE"

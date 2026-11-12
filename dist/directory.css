@@ -3,14 +3,14 @@
 .directory-back{display:flex;align-items:center;gap:24px;font-size:11px;color:var(--muted)}.directory-back>span{font:22px Arial;color:var(--accent)}.directory-back:hover{color:var(--text)}
 .directory-intro{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:54px 0 35px}
 .directory-kicker{font-size:11px;color:var(--muted);margin:0 0 14px}.directory-intro h1{font-size:clamp(32px,4vw,56px);font-weight:500;letter-spacing:-2px;margin:0;line-height:1.65}.directory-year{font-size:14px;color:var(--muted);margin:7px 0 0}
-.directory-count{display:flex;align-items:baseline;gap:11px;color:var(--muted)}.directory-count strong{font:700 44px Estedad,Vazirmatn,sans-serif;color:#d4d1c8}.directory-count>span{font-size:11px}
+.directory-count{display:flex;align-items:baseline;gap:11px;color:var(--muted)}.directory-count strong{font:700 44px var(--font-num);color:#d4d1c8}.directory-count>span{font-size:11px}
 .directory-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-top:1px solid var(--line);margin-bottom:30px;font-size:10px;color:var(--muted)}.directory-toolbar p{margin:0}.directory-toolbar>span{font-size:9px;color:#868991}
 .graduates-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:42px 34px;margin-bottom:72px;direction:rtl}
 .graduate-card{position:relative;display:block;width:100%;padding:0;border:0;border-radius:17px;overflow:hidden;background:#060a14;color:var(--text);cursor:zoom-in;box-shadow:0 0 18px rgb(85 90 100 / .18);transition:transform .3s ease,box-shadow .3s ease}
 .graduate-card:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .graduate-photo{display:block;width:100%;aspect-ratio:6/8;background-color:#171c27;background-repeat:no-repeat;background-position:center;background-size:cover;object-fit:cover;filter:none;transition:filter .35s ease}
 .graduate-card::after{content:'';position:absolute;inset:60% 0 0;background:linear-gradient(0deg,#0006,transparent);pointer-events:none}
-.student-suffix{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 9px;border-radius:9px;background:#060a14e8;color:#f0ede5;font:700 15px Estedad,Vazirmatn,sans-serif;z-index:1;direction:ltr}
+.student-suffix{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 9px;border-radius:9px;background:#060a14e8;color:#f0ede5;font:700 15px var(--font-num);z-index:1;direction:ltr}
 .portrait-dialog{width:min(420px,92vw);padding:18px}.portrait-dialog .graduate-photo{border-radius:12px;filter:none}.portrait-dialog .dialog-caption{margin-top:12px}.directory-empty{padding:50px 0 80px;text-align:center;color:var(--muted)}.directory-empty[hidden]{display:none}
 .directory-toolbar[hidden]{display:none}
 @media(hover:hover) and (pointer:fine){.graduate-card:hover{transform:translateY(-4px);box-shadow:0 0 24px rgb(105 111 122 / .3)}.graduate-card:hover .graduate-photo{filter:brightness(1.04)}}

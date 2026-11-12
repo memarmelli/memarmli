@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <title>آمار دانش‌آموختگان، معمار ملی</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/NotoKufiArabic-fa.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261028-share-1">
+  <link rel="stylesheet" href="stats.css?v=20261028-classic-2">
+  <script src="i18n.js?v=20261028-share-1"></script>
+  <script src="data.js" defer></script>
+  <script src="career.js?v=20261025-more-1" defer></script>
+  <script src="lineage.js?v=20261025-more-1" defer></script>
+  <script src="people.js?v=20261025-stats-1" defer></script>
+  <script src="geo.js?v=20261025-stats-1" defer></script>
+  <script src="globe.js?v=20261028-engraved-1" defer></script>
+  <script src="stats.js?v=20261028-classic-1" defer></script>
+  <script src="sketch.js?v=20261028-classic-1" defer></script>
+</head>
+<body class="page-stats">
+  <a class="skip-link" href="#statistics" data-i18n="stats.skip">رفتن به آمار</a>
+  <div class="page-shell" id="top">
+    <header class="directory-header">
+      <a class="directory-brand" href="index.html" data-href="index.html"><span data-i18n="site.name">معمار ملی</span><span class="brand-dot" aria-hidden="true">.</span></a>
+      <a class="lang-switch" href="?lang=en" data-i18n="lang.switch" data-i18n-attr="aria-label:lang.switchLabel">English</a>
+      <a id="back-to-cohort" class="directory-back" href="index.html" data-href="index.html"><span id="back-arrow" class="back-arrow" aria-hidden="true">→</span><span id="back-label" data-i18n="profile.back">بازگشت به ورودی‌ها</span></a>
+    </header>
+    <main id="statistics" class="stats-page">
+      <div class="stats-page-head">
+        <div>
+          <p class="profile-kicker" data-i18n="stats.kicker">معمار ملی در اعداد</p>
+          <h1 data-i18n="stats.title">آمار دانش‌آموختگان</h1>
+          <p class="stats-intro" data-i18n="stats.intro"></p>
+        </div>
+        <div class="stats-art" data-sketch-art="chart" aria-hidden="true"></div>
+        <div id="stats-filter-note" class="stats-filter-note" hidden>
+          <p data-i18n="stats.filteredBy"></p>
+          <ul id="stats-filters" class="stats-filter-chips"></ul>
+          <p class="stats-filter-actions"><a id="stats-to-list" data-i18n="stats.backToList"></a><a id="stats-show-all" data-i18n="stats.showAll"></a></p>
+        </div>
+      </div>
+      <section class="stats stats-headline" aria-labelledby="stats-headline-title"><h2 id="stats-headline-title" class="visually-hidden" data-i18n="stats.title"></h2><div id="stats-grid" class="stats-grid"></div><p id="stats-empty" class="stats-empty" data-i18n="stats.none" hidden></p></section>
+      <section id="globe" class="globe-panel" data-sketch="frame" aria-labelledby="globe-title" hidden>
+        <div class="globe-head">
+          <h2 id="globe-title" data-i18n="globe.title">دانش‌آموختگان در جهان</h2>
+          <p class="globe-hint" data-i18n="globe.hint"></p>
+        </div>
+        <div class="globe-body">
+          <div class="globe-stage">
+            <canvas class="globe-canvas" role="img" data-i18n-attr="aria-label:globe.canvas"></canvas>
+            <div class="globe-card" role="dialog" aria-live="polite" hidden></div>
+          </div>
+          <div class="globe-side">
+            <p class="globe-side-title" data-i18n="globe.cities">شهرها</p>
+            <ol class="globe-cities"></ol>
+            <p class="globe-unplaced" hidden></p>
+          </div>
+        </div>
+      </section>
+      <div class="breakdowns">
+        <section class="breakdown" data-sketch="frame" aria-labelledby="by-specialty-title"><h2 id="by-specialty-title" data-i18n="stats.bySpecialty"></h2><ol id="by-specialty" class="bars"></ol></section>
+        <section class="breakdown" data-sketch="frame" aria-labelledby="by-software-title"><h2 id="by-software-title" data-i18n="stats.bySoftware"></h2><ol id="by-software" class="bars"></ol></section>
+        <section class="breakdown" data-sketch="frame" aria-labelledby="by-country-title"><h2 id="by-country-title" data-i18n="stats.byCountry"></h2><ol id="by-country" class="bars"></ol></section>
+        <section class="breakdown" data-sketch="frame" aria-labelledby="by-degree-title"><h2 id="by-degree-title" data-i18n="stats.byDegree"></h2><ol id="by-degree" class="bars"></ol></section>
+        <section class="breakdown" data-sketch="frame" aria-labelledby="by-intake-title"><h2 id="by-intake-title" data-i18n="stats.byIntake"></h2><ol id="by-intake" class="bars"></ol></section>
+      </div>
+    </main>
+    <footer data-sketch="rule"><div class="footer-brand"><span data-i18n="site.name">معمار ملی</span><span class="footer-dot" aria-hidden="true">.</span></div><p class="demo-note" data-i18n="footer.demo"></p><a href="#top" class="back-top"><span data-i18n="footer.top">بازگشت به بالا</span> <span class="back-top-arrow" aria-hidden="true">↑</span></a></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- The link-preview image, dist/assets/og-cover.png (1200x630). To remake it, serve the site
+     (python server.py, or the sample on port 4174), point the three localhost:4174 links
+     below at it, then run:
+     chrome --headless=new --hide-scrollbars --force-prefers-reduced-motion --window-size=1200,630
+            --virtual-time-budget=4000 --screenshot=og-cover.png file:///path/to/tools/og-cover.html -->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="http://localhost:4174/styles.css">
+<style>
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  body::after{display:none}
+  .card{position:absolute!important;inset:34px 34px 34px;display:grid;place-items:center;align-content:start;padding-top:70px;gap:18px}
+  .masthead.cover{position:absolute;inset:0;margin:0;padding:0;border:0;border-radius:0;background:radial-gradient(70% 90% at 50% 0%,#101a2e 0%,#070b14 70%);display:block}
+  .masthead.cover::before{display:none}
+  .masthead.cover .sketch-masthead{max-height:46%;opacity:.55}
+  .logo{width:520px;filter:grayscale(1) contrast(3.2) invert(1) blur(.45px);mix-blend-mode:screen;opacity:.92}
+  .line{font:600 30px/1.6 'Noto Kufi Arabic',sans-serif;color:#d9d4c8;text-shadow:0 1px 12px #070b14}
+  .swash{width:150px;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 10'%3E%3Cfilter id='g' filterUnits='userSpaceOnUse' x='0' y='0' width='64' height='10'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.12 1.1' numOctaves='3' seed='5' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='3' xChannelSelector='R' yChannelSelector='G' result='e'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 -1.35' result='m'/%3E%3CfeComposite in='e' in2='m' operator='in'/%3E%3C/filter%3E%3Cpath d='M3 6Q30 2.5 61 5' fill='none' stroke='%23c0171f' stroke-width='5' stroke-linecap='round' filter='url(%23g)'/%3E%3C/svg%3E") no-repeat 0 0/100% 100%}
+</style>
+</head>
+<body>
+  <div class="masthead cover"></div>
+  <div class="card" data-sketch="frame">
+    <img class="logo" src="http://localhost:4174/assets/melli-original.png" alt="">
+    <div class="swash"></div>
+    <div class="line">آرشیو دانش‌آموختگان معماری دانشگاه ملی (شهید بهشتی)</div>
+  </div>
+  <script src="http://localhost:4174/sketch.js"></script>
+</body>
+</html>
