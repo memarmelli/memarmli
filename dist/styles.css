@@ -60,9 +60,9 @@ input::placeholder{color:var(--faint)}
 :root[dir="rtl"] .masthead{grid-template-areas:'university title national'}
 .masthead::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 calc(50% - .5px),rgb(255 255 255 / .03) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),linear-gradient(0deg,transparent 0 calc(100% - 1px),rgb(255 255 255 / .03) 0)}
 .masthead-lang{position:absolute;top:16px;inset-inline-end:16px;z-index:1}
-.university-logo{grid-area:university;justify-self:right;display:block;width:88px;height:88px;object-fit:contain;clip-path:inset(4%)}
-.national-logo{grid-area:national;justify-self:left;display:block;width:auto;height:88px}
-.university-logo,.national-logo{filter:grayscale(1) contrast(8) invert(1);mix-blend-mode:screen}
+.university-logo,.national-logo{display:block;width:88px;height:88px;object-fit:contain;padding:3px;border-radius:4px;background:#fff}
+.university-logo{grid-area:university;justify-self:right}
+.national-logo{grid-area:national;justify-self:left}
 .masthead-title{grid-area:title;text-align:center}
 .masthead-title h1{margin:0}
 .melli-logo{display:block;width:min(100%,330px);height:auto;margin:0 auto;filter:grayscale(1) contrast(3.2) invert(1) blur(.45px);mix-blend-mode:screen;opacity:.9}
@@ -232,8 +232,7 @@ footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:w
   .page-shell{padding:0 24px}
   .masthead{grid-template-columns:1fr 1fr;grid-template-areas:'title title' 'national university';padding:48px 24px 24px;gap:20px}
   :root[dir="rtl"] .masthead{grid-template-areas:'title title' 'university national'}
-  .university-logo{width:64px;height:64px}
-  .national-logo{height:64px}
+  .university-logo,.national-logo{width:64px;height:64px}
   .archive-layout{grid-template-columns:1fr;gap:24px}
   .lineage-panel{position:static;max-height:none}
 }
@@ -244,8 +243,7 @@ footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:w
   .masthead{margin-top:12px;padding:46px 16px 20px;border-radius:var(--r-md)}
   .melli-logo{width:min(100%,240px)}
   .masthead-title p{font-size:12px}
-  .university-logo{width:48px;height:48px}
-  .national-logo{height:50px}
+  .university-logo,.national-logo{width:52px;height:52px}
   .artinext{gap:10px}
   .artinext-logo{height:30px}
   .artinext-name strong{font-size:15px}
