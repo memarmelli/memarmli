@@ -244,7 +244,7 @@ function renderList() {
       const item = document.createElement('li');
       item.className = 'person';
       const image = document.createElement('img');
-      image.src = photoUrl(student.image);
+      image.src = photoUrl(student.thumb || student.image);
       image.alt = '';
       image.loading = 'lazy';
       const text = document.createElement('div');

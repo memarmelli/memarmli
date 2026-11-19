@@ -1,0 +1,14 @@
+name = "melli-archive-admin"
+main = "worker.mjs"
+compatibility_date = "2026-10-01"
+workers_dev = false
+preview_urls = false
+routes = [{ pattern = "admin.memar-mli.ir/*", zone_name = "memar-mli.ir" }]
+
+[[durable_objects.bindings]]
+name = "ARCHIVE"
+class_name = "ArchiveConnection"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ArchiveConnection"]

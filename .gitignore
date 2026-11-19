@@ -17,6 +17,7 @@ __pycache__/
 
 # Telegram bot (Cloudflare Worker): local state and the copy of wrangler.example.toml with real ids.
 bot/.wrangler/
+admin-host/.wrangler/
 bot/.wrangler-dry-run/
 bot/.dev.vars
 bot/wrangler.toml
