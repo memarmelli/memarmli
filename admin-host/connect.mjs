@@ -56,23 +56,41 @@ async function connect() {
   socket.binaryType = 'arraybuffer';
   let lastSeen = Date.now();
   let connected = false;
+  let stopped = false;
+  let finish;
+  const ended = new Promise(resolve => { finish = resolve; });
+  let probeFailures = 0;
   socket.addEventListener('open', () => { connected = true; });
   socket.addEventListener('message', ({data}) => {
+    if (stopped) return;
     lastSeen = Date.now();
     if (data !== 'pong') respond(socket, data).catch(() => socket.close(1002, 'Invalid message'));
   });
+  socket.addEventListener('close', finish, {once: true});
+  socket.addEventListener('error', finish, {once: true});
   const heartbeat = setInterval(() => {
-    if (Date.now() - lastSeen > 90000) socket.close();
+    if (Date.now() - lastSeen > 90000) finish();
     else if (socket.readyState === WebSocket.OPEN) socket.send('ping');
   }, 30000);
+  // A socket can still answer pings across a Worker rollout while application
+  // messages time out. Exercise the same read-only route used by the login page.
+  const probe = setInterval(async () => {
+    if (!connected || stopped) return;
+    try {
+      const response = await fetch('https://admin.memar-mli.ir/api/session', {signal: AbortSignal.timeout(12000)});
+      if (!response.ok || (await response.json()).authenticated !== false) throw new Error();
+      probeFailures = 0;
+    } catch {
+      if (++probeFailures >= 2) finish();
+    }
+  }, 45000);
   try {
-    await new Promise(resolve => {
-      socket.addEventListener('close', resolve, {once: true});
-      socket.addEventListener('error', resolve, {once: true});
-    });
+    await ended;
   } finally {
+    stopped = true;
     clearInterval(heartbeat);
-    if (socket.readyState === WebSocket.OPEN) socket.close();
+    clearInterval(probe);
+    if (socket.readyState < WebSocket.CLOSING) socket.close();
   }
   return connected;
 }
