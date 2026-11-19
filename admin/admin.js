@@ -6,6 +6,10 @@ const fa = new Intl.NumberFormat('fa-IR', {useGrouping: false});
 const faDigits = value => String(value).replace(/\d/g, digit => '۰۱۲۳۴۵۶۷۸۹'[digit]);
 const toLatin = value => String(value).replace(/[۰-۹]/g, d => d.charCodeAt(0) - 0x06f0).replace(/[٠-٩]/g, d => d.charCodeAt(0) - 0x0660);
 const EMPTY_PORTRAIT = '/assets/portrait-empty.svg';
+const archiveOrigin = 'https://memar-mli.ir';
+const onlineAdmin = 'https://admin.memar-mli.ir';
+const archiveLogin = location.origin === archiveOrigin;
+const publicSite = location.origin === onlineAdmin ? archiveOrigin : location.origin;
 const MAX_UPLOAD = 12 * 1024 * 1024;
 
 const form = $('#student-form');
@@ -34,7 +38,8 @@ async function api(path, {method = 'GET', body, file} = {}) {
     headers['Content-Type'] = 'application/json';
     payload = JSON.stringify(body);
   }
-  const response = await fetch(path, {method, headers, body: payload, credentials: 'same-origin'});
+  const url = new URL(path, archiveLogin ? onlineAdmin : location.origin);
+  const response = await fetch(url, {method, headers, body: payload, credentials: 'include'});
   const data = await response.json().catch(() => ({}));
   if (response.status === 401 && path !== '/api/login') {
     showLogin();
@@ -106,6 +111,10 @@ function showLogin() {
 }
 
 async function showApp() {
+  if (archiveLogin) {
+    location.replace(onlineAdmin + '/admin/');
+    return;
+  }
   $('#login-view').hidden = true;
   $('#app-view').hidden = false;
   await reload();
@@ -163,7 +172,8 @@ $('#login-form').addEventListener('submit', async event => {
     $('#login-code').value = '';
     await showApp();
   } catch (problem) {
-    error.textContent = problem.message === 'wrong code' ? 'کد ورود درست نیست.' : problem.message;
+    error.textContent = problem instanceof TypeError ? 'ارتباط با سرور مدیریت برقرار نشد. دوباره تلاش کنید.' :
+      problem.message === 'wrong code' ? 'کد ورود درست نیست.' : problem.message;
     error.hidden = false;
     $('#login-code').select();
   } finally {
@@ -433,7 +443,7 @@ function openEditor(student) {
 function updateProfileLink(student) {
   const link = $('#view-profile');
   link.hidden = !student?.published;
-  if (student) link.href = `/student.html?year=${student.year}&student=${student.studentNumber.slice(-2)}`;
+  if (student) link.href = `${publicSite}/student.html?year=${student.year}&student=${student.studentNumber.slice(-2)}`;
 }
 
 function yearFromNumber(number) {
@@ -1085,6 +1095,12 @@ $('#bulk-save').addEventListener('click', async () => {
 
 /* ---------------------------------------------------------------- Start */
 
+$$('.topbar a[href="/"]').forEach(link => { link.href = publicSite + '/'; });
+showLogin();
 api('/api/session')
-  .then(session => (session.authenticated ? showApp() : showLogin()))
-  .catch(() => showLogin());
+  .then(session => { if (session.authenticated) return showApp(); })
+  .catch(() => {
+    const error = $('#login-error');
+    error.textContent = 'ارتباط با سرور مدیریت برقرار نشد. دوباره تلاش کنید.';
+    error.hidden = false;
+  });

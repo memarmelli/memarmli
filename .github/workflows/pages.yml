@@ -25,6 +25,10 @@ jobs:
         with:
           persist-credentials: false
       - uses: actions/configure-pages@v5
+      - name: Include the admin interface
+        run: |
+          mkdir -p dist/admin
+          cp admin/index.html admin/admin.css admin/admin.js dist/admin/
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist

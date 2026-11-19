@@ -23,6 +23,7 @@ pending self-edits and join requests. HTTPS_PROXY is honoured for that link.
 import argparse
 import hashlib
 import hmac
+import ipaddress
 import html
 import http.server
 import json
@@ -198,6 +199,7 @@ BOT_SECRET = ENV.get('BOT_SYNC_SECRET', '')
 BOT_USERNAME = ENV.get('BOT_USERNAME', 'memar_mli_bot')
 # The public address, for absolute links in previews; without it the request's Host is used.
 SITE_URL = ENV.get('MELLI_SITE_URL', '').rstrip('/')
+TUNNEL_ADMIN = ENV.get('MELLI_TUNNEL_ADMIN') == '1'
 
 
 def log(action, record=None, actor='admin', detail=''):
@@ -624,16 +626,36 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'same-origin')
         path = urlparse(self.path).path
+        if self.archive_login_request():
+            self.send_header('Access-Control-Allow-Origin', 'https://memar-mli.ir')
+            self.send_header('Access-Control-Allow-Credentials', 'true')
+            self.send_header('Vary', 'Origin')
         if path.startswith('/admin') or path.startswith('/api/'):
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Frame-Options', 'DENY')
+            self.send_header('X-Robots-Tag', 'noindex')
+        elif self.private_upload():
+            self.send_header('Cache-Control', 'private, no-store')
         elif path.endswith('/data.js'):
             self.send_header('Cache-Control', 'no-cache')
         super().end_headers()
 
+    def private_upload(self):
+        if not TUNNEL_ADMIN:
+            return False
+        path = os.path.normcase(self.translate_path(self.path))
+        uploads = os.path.normcase(UPLOADS)
+        return path == uploads or path.startswith(uploads + os.sep)
+
+    def send_head(self):
+        if self.private_upload() and not self.authenticated():
+            self.send_error(HTTPStatus.NOT_FOUND)
+            return None
+        return super().send_head()
+
     def do_GET(self):
         path = urlparse(self.path).path
-        if path == '/admin':
+        if path == '/admin' or (path == '/' and TUNNEL_ADMIN and self.headers.get('Host') == 'admin.memar-mli.ir'):
             self.send_response(HTTPStatus.MOVED_PERMANENTLY)
             self.send_header('Location', '/admin/')
             self.end_headers()
@@ -654,6 +676,20 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_DELETE(self):
         self.api('DELETE', urlparse(self.path).path)
+
+    def archive_login_request(self):
+        return (TUNNEL_ADMIN and self.headers.get('Host') == 'admin.memar-mli.ir'
+                and self.headers.get('Origin') == 'https://memar-mli.ir'
+                and urlparse(self.path).path in ('/api/session', '/api/login'))
+
+    def do_OPTIONS(self):
+        if not self.archive_login_request():
+            return self.send_error(HTTPStatus.FORBIDDEN)
+        self.send_response(HTTPStatus.NO_CONTENT)
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, X-Melli')
+        self.send_header('Content-Length', '0')
+        self.end_headers()
 
     # -- pages: the HTML gets preview tags for Telegram and other link previews,
     # which read the page without running its scripts.
@@ -733,7 +769,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if self.headers.get('X-Melli') != '1':
             return False
         origin = self.headers.get('Origin')
-        return not origin or urlparse(origin).netloc == self.headers.get('Host')
+        return not origin or urlparse(origin).netloc == self.headers.get('Host') or self.archive_login_request()
 
     # -- API
 
@@ -796,6 +832,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def login(self):
         ip = self.client_address[0]
+        if TUNNEL_ADMIN and ipaddress.ip_address(ip).is_loopback:
+            try:
+                ip = str(ipaddress.ip_address(self.headers.get('CF-Connecting-IP', '')))
+            except ValueError:
+                pass
         record = failures.get(ip)
         if record and record[2] > time.time():
             return self.json_reply(HTTPStatus.TOO_MANY_REQUESTS, {'error': 'too many attempts, try again in 15 minutes'})

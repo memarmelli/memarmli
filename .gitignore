@@ -13,6 +13,7 @@ __pycache__/
 # Stage only uploads referenced by the published dist/data.js.
 /dist/uploads/*
 /dist/.openai/
+/dist/admin/
 
 # Telegram bot (Cloudflare Worker): local state and the copy of wrangler.example.toml with real ids.
 bot/.wrangler/
