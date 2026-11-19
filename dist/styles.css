@@ -56,7 +56,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 
 input::placeholder{color:var(--faint)}
 
 /* ---------------------------------------------------------------- home: masthead */
-.masthead{position:relative;display:grid;grid-template-columns:1fr auto 1fr;grid-template-areas:'national title university';align-items:center;gap:24px;margin-top:20px;padding:40px 40px 34px;border:1px solid var(--line);border-radius:var(--r-lg);background:radial-gradient(110% 140% at 50% 0%,#0f1729 0%,#070b14 64%);overflow:hidden}
+.masthead{position:relative;display:grid;grid-template-columns:minmax(88px,1fr) minmax(0,auto) minmax(88px,1fr);grid-template-areas:'national title university';align-items:center;gap:24px;margin-top:20px;padding:40px 40px 34px;border:1px solid var(--line);border-radius:var(--r-lg);background:radial-gradient(110% 140% at 50% 0%,#0f1729 0%,#070b14 64%);overflow:hidden}
 :root[dir="rtl"] .masthead{grid-template-areas:'university title national'}
 .masthead::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 calc(50% - .5px),rgb(255 255 255 / .03) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),linear-gradient(0deg,transparent 0 calc(100% - 1px),rgb(255 255 255 / .03) 0)}
 .masthead-lang{position:absolute;top:16px;inset-inline-end:16px;z-index:1}
@@ -214,6 +214,7 @@ footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:w
 .demo-note{margin:0;font-size:12px;color:var(--faint)}
 .footer-actions{display:flex;align-items:center;gap:clamp(12px,3vw,32px)}
 .artinext{display:flex;align-items:center;gap:12px;text-align:left}
+.artinext:hover strong,.artinext:focus-visible strong{text-decoration:underline}
 .artinext-logo{display:block;flex:none;width:auto;height:40px}
 .artinext-name{display:flex;flex-direction:column;gap:2px;font-family:var(--font-en);white-space:nowrap}
 .artinext-name strong{font-size:20px;font-weight:700;letter-spacing:-.4px;line-height:1.1}
